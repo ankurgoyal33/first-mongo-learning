@@ -15,47 +15,47 @@
 //   console.log(`Server running at http://${hostname}:${port}/`);
 // });
 
-// var MongoClient = require('mongodb').MongoClient;
-// var url = 'mongodb://127.0.0.1:27017/EmployeeDB';
-
-// MongoClient.connect(url, function(err, db) {
-
-//     var cursor = db.collection('Employee').find();
-
-//     cursor.each(function(err, doc) {
-
-//         console.log(doc);
-//         // db.close();
-//     });
-// }); 
-
 var MongoClient = require('mongodb').MongoClient;
 var url = 'mongodb://127.0.0.1:27017/EmployeeDB';
 
 MongoClient.connect(url, function(err, client) {
     var db = client.db('EmployeeDB');
-  //   var cursor = db.collection('Employee').find();
-  //   cursor.forEach(function(err, doc) {
-  //     console.log(doc);
-  // });
-
-  db.collection('Employee').find({}).toArray(function(err, doc) {
-      doc.forEach(function(doc) {
-        console.log(doc);
-      });
-    client.close();
+    
+//read
+    db.collection('Employee').find({}).toArray(function(err, docs) {
+        docs.forEach(function(doc) {
+          console.log(doc);
+        });
+      client.close();
     });
 
-    // cursor.each(function(err, doc) {
+// create, 
+      // db.collection('Employee').insertOne({
+      //   Employeeid: 4,
+      //   EmployeeName: "NewEmployee"
+      // });
 
-    //     console.log(doc);
-    //     // db.close();
-    // });
+
+// update
+        // db.collection('Employee').updateOne({
+        //   "EmployeeName": "NewEmployee"
+        // }, {
+        //   $set: {
+        //       "EmployeeName": "Mohan"
+        //   }
+        // });
+
+
+// delete
+          // db.collection('Employee').deleteOne(
+
+          //   {
+          //       "EmployeeName": "Mohan"
+          //   }
+
+          // );
+
+
 }); 
 
-//first name
-//last name
-// address
-// phone contact
 
-//using mongo and
