@@ -4,9 +4,9 @@
   "description": "try first",
   "main": "node_first.js",
   "dependencies": {
+    "express": "^4.16.3",
     "mongodb": "^4.0.1"
   },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
