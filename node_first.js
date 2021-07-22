@@ -4,23 +4,6 @@ var MongoClient = require('mongodb').MongoClient;
 var url = 'mongodb://127.0.0.1:27017/EmployeeDB';
 var str = "";
 
-// app.route('/Employeeid').get(function(req, res) {
-//   MongoClient.connect(url, function(err, db) {
-//       var collection = db.collection('Employee');
-//       var cursor = collection.find({});
-//       str = "";
-//       cursor.forEach(function(item) {
-//           if (item != null) {
-//                   str = str + "    Employee id  " + item.Employeeid + "</br>";
-//           }
-//       }, function(err) {
-//           res.send(err);
-//           db.close();
-//          }
-//       );
-//   });
-// });
-
 app.route('/Employeeid').get(function (req, res) {
   console.log("inside route");
   MongoClient.connect(url, function (err, client) {
@@ -51,19 +34,13 @@ app.route('/Employeeid').get(function (req, res) {
 var server = app.listen(8080, () => {
   console.log("Server running at localhost:8080");
 });
-// server.listen(port, hostname, () => {
-    // console.log(`Server running at http://${hostname}:${port}/`);
-  // });
 
-// app.route('/Employeeid').get(function (req, res) {
-//   MongoClient.connect(url, function (err, client) {
-    // var db = client.db('EmployeeDB');
 
 //     //READ
-    // db.collection('Employee').find({}).toArray(function (err, docs) {
-    //   docs.forEach(function (doc) {
-    //     console.log(doc);
-    //   });
+//     db.collection('Employee').find({}).toArray(function (err, docs) {
+//       docs.forEach(function (doc) {
+//         console.log(doc);
+//       });
 //       client.close();
 //     });
 
