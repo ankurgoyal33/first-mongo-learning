@@ -27,39 +27,17 @@ app.route('/PersonDetailsRead').get(function (req, res) {
     console.log("connected to READ mongo");
 
     var db = client.db('PersonDetailsDB');
-    // console.log("test1: " + db.collection('PersonDetails').find({}));
-    // var retObj = db.collection('PersonDetails').find({});
-    // res.send(JSON.stringify(retObj));
-    // res.send(retObj);
-
-    // console.log("test2: " + db.collection('PersonDetails').find({}).toArray());
     db.collection('PersonDetails').find({}).toArray(function (err, docs) {
       docs.forEach(function (doc) {
         if (doc != null) {
-          // str.push({"FirstName":doc.FirstName},{"LastName":doc.LastName},{"Address":doc.Address},{"Contact":doc.Phone});
-          // console.log("test2: "+ str);
-
-          // str.push({"LastName":doc.LastName});
-          // str.push({"Address":doc.Address});
-          // str.push({"Contact":doc.Phone});
-
-          // str += "FirstName:  " + doc.FirstName
-          //     + "LastName:  " + doc.LastName
-          //     + "Address:  " + doc.Address
-          //     + "Contact:  " + doc.Phone
-          //     + "</br>";
-
           arr.push(doc);
-          // console.log("test3: "+ arr);
         }
       }, function (err) {
         res.send(err);
         db.close();
       }
       );
-      // res.send(arr);
       res.send(JSON.stringify(arr));
-
     });
 
   });
@@ -74,7 +52,7 @@ app.route('/PersonDetailsCreate').post(function (req, res) {
   console.log("inside CREATE route");
   MongoClient.connect(url, function (err, client) {
     console.log("connected to CREATE mongo");
-var arr = [];
+    var arr = [];
     var db = client.db('PersonDetailsDB');
     db.collection('PersonDetails').insertOne({
       FirstName: req.body.Fname,
@@ -110,15 +88,31 @@ app.route('/PersonDetailsUpdate').post(function (req, res) {
   MongoClient.connect(url, function (err, client) {
     console.log("connected to UPDATE mongo");
     var db = client.db('PersonDetailsDB');
-
+    var arr = [];
+    
     db.collection('PersonDetails').updateOne({
-      FirstName: req.body.Fname
+      FirstName: req.body.Fname //basically any primary key
     }, {
       $set: {
-        FirstName: req.body.Uname
+        FirstName: req.body.UFname,
+        LastName: req.body.ULname,
+        Address: req.body.UAddress,
+        Phone: req.body.UContact
       }
     });
-    res.send("successfully updated in DB");
+
+    db.collection('PersonDetails').find({}).toArray(function (err, docs) {
+      docs.forEach(function (doc) {
+        if (doc != null) {
+          arr.push(doc);
+        }
+      }, function (err) {
+        res.send(err);
+        db.close();
+      }
+      );
+      res.send(JSON.stringify(arr));
+    });
   });
 });
 
