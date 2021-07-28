@@ -12,72 +12,27 @@ app.use(cors({
 }));
 app.use(express.json());
 
-// var Img = require('./ImgModel');
-var mongoose = require('mongoose')
-var Schema = mongoose.Schema;
-var ImgSchema = new Schema(
-    {
-        img: {
-            data: Buffer,
-            contentType: String
-        }
-    },
-    {
-        timestamps: true
-    }
-);
 
-module.exports = mongoose.model('Img', ImgSchema);
-//
 
-const fs = require('fs');
 
-const multer = require('multer');
-const storage = multer.diskStorage({
-  destination: function (req, res, cb) {
-    cb(null, 'uploads/')
-  }
-});
+// app.route('/img_data')
+//   .post(upload.single('file'), function (req, res) {
 
-const upload = multer({ storage: storage });
-app.route('/img_data')
-  .post(upload.single('file'), function (req, res) {
-
-    var new_img = new Img;
-    new_img.img.data = fs.readFileSync(req.file.path)
-    new_img.img.contentType = 'image/jpeg';
-    new_img.save();
-    res.json({ message: 'New image added to the db!' });
-  })
-//   .post('/', upload.single('file'), (req, res, next) => {
- 
-//     var obj = {
-//         name: req.body.name,
-//         desc: req.body.desc,
-//         img: {
-//             data: fs.readFileSync(path.join(__dirname + '/uploads/' + req.file.path)),
-//             contentType: 'image/jpeg'
-//         }
-//     }
-//     imgModel.create(obj, (err, item) => {
-//         if (err) {
-//             console.log(err);
-//         }
-//         else {
-//             // item.save();
-//             res.redirect('/');
-//         }
-//     });
-// })
-  .get(function (req, res) {
-    Img.findOne({}, 'img createdAt', function (err, img) {
-      if (err)
-        res.send(err);
-      console.log(img);
-      res.contentType('json');
-      res.send(img);
-    }).sort({ createdAt: 'desc' });
-  });
+//     var new_img = new Img;
+//     new_img.img.data = fs.readFileSync(req.file.path)
+//     new_img.img.contentType = 'image/jpeg';
+//     new_img.save();
+//     res.json({ message: 'New image added to the db!' });
+//   })
+//   .get(function (req, res) {
+//     Img.findOne({}, 'img createdAt', function (err, img) {
+//       if (err)
+//         res.send(err);
+//       console.log(img);
+//       res.contentType('json');
+//       res.send(img);
+//     }).sort({ createdAt: 'desc' });
+//   });
 
 
 
